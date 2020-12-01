@@ -5,6 +5,7 @@ import { ClientFake } from '../../test/helpers';
 
 import { Project } from './project';
 import { ProjectAttributes } from './types';
+import { User } from './user';
 
 describe(`${Project.name}`, () => {
   const client = new ClientFake();
@@ -54,6 +55,24 @@ describe(`${Project.name}`, () => {
     it('returns the full URL to the project', () => {
       const project = new Project(factory.projectAttributes({ id: 1 }), client);
       expect(project.url).toEqual('https://scratch.mit.edu/projects/1/');
+    });
+  });
+
+  describe('author', () => {
+    it('returns the associated author instance', () => {
+      const userAttributes = factory.userAttributes({
+        id: 1,
+        username: 'author',
+      });
+
+      const project = new Project(
+        factory.projectAttributes({ author: userAttributes }),
+        client
+      );
+
+      expect(project.author).toBeInstanceOf(User);
+      expect(project.author.id).toEqual(1);
+      expect(project.author.username).toEqual('author');
     });
   });
 

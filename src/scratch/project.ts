@@ -1,12 +1,15 @@
 import { ProjectImages } from './types';
 import { ProjectAttributes } from './types';
 import { Client } from './client';
+import { User } from './user';
 
 export class Project {
   id: number;
   title: string;
   description: string;
   instructions: string;
+
+  author: User;
 
   image: string;
   images: ProjectImages;
@@ -29,6 +32,8 @@ export class Project {
     this.title = attributes.title;
     this.description = attributes.description;
     this.instructions = attributes.instructions;
+
+    this.author = new User(attributes.author, client);
 
     this.image = attributes.image;
     this.images = attributes.images;
