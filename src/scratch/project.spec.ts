@@ -1,5 +1,4 @@
 import faker from 'faker';
-import AxiosMockAdapter from 'axios-mock-adapter';
 
 import * as factory from '../../test/factories';
 import { ClientFake } from '../../test/helpers';
