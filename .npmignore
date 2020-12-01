@@ -1,0 +1,11 @@
+/src
+/test
+/coverage
+/tmp
+
+*.spec.ts
+.eslintrc.js
+.prettierrc.js
+jest.config.js
+tsconfig.build.json
+tsconfig.json
