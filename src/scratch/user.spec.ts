@@ -11,6 +11,17 @@ describe(`${User.name}`, () => {
 
   afterEach(() => jest.restoreAllMocks());
 
+  describe('url', () => {
+    it("returns the URL to the user's profile", () => {
+      const user = new User(
+        factory.userAttributes({ username: 'username' }),
+        client
+      );
+
+      expect(user.url).toEqual('https://scratch.mit.edu/users/username/');
+    });
+  });
+
   describe('projects()', () => {
     const username = 'rebbel16';
 

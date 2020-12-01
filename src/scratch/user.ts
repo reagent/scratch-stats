@@ -62,6 +62,10 @@ export class User {
     this.country = attributes.profile.country;
   }
 
+  get url(): string {
+    return `https://scratch.mit.edu/users/${this.username}/`;
+  }
+
   async projects(options?: { order: OrderOptions }): Promise<Project[]> {
     const projects = await this.client.projects(this.username);
 
