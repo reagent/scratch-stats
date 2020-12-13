@@ -3,6 +3,8 @@
 /coverage
 /tmp
 
+.vscode
+
 *.spec.ts
 .eslintrc.js
 .prettierrc.js
