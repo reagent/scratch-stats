@@ -1,20 +1,33 @@
 import Axios, { AxiosInstance } from 'axios';
+
 import { UserAttributes, ProjectAttributes, MessageCount } from './types';
 import { User } from './user';
 import { Project } from './project';
+
+interface Response<T> {
+  body: T;
+  status: number;
+}
 
 export class Client {
   baseUrl = 'https://api.scratch.mit.edu';
 
   constructor(private _httpAdapter?: AxiosInstance) {}
 
-  async user(username: string): Promise<User> {
-    const attrs = await this.get<UserAttributes>(`/users/${username}`);
+  async user(username: string): Promise<User | undefined> {
+    const { body: attrs, status } = await this.get<UserAttributes>(
+      `/users/${username}`
+    );
+
+    if (status === 404) {
+      return;
+    }
+
     return new User(attrs, this);
   }
 
   async projects(username: string): Promise<Project[]> {
-    const all = await this.get<ProjectAttributes[]>(
+    const { body: all } = await this.get<ProjectAttributes[]>(
       `/users/${username}/projects`
     );
 
@@ -22,12 +35,14 @@ export class Client {
   }
 
   async project(id: number): Promise<Project> {
-    const attrs = await this.get<ProjectAttributes>(`/projects/${id}`);
+    const { body: attrs } = await this.get<ProjectAttributes>(
+      `/projects/${id}`
+    );
     return new Project(attrs, this);
   }
 
   async favorites(username: string): Promise<Project[]> {
-    const all = await this.get<ProjectAttributes[]>(
+    const { body: all } = await this.get<ProjectAttributes[]>(
       `/users/${username}/favorites`
     );
 
@@ -35,7 +50,7 @@ export class Client {
   }
 
   async followers(username: string): Promise<User[]> {
-    const all = await this.get<UserAttributes[]>(
+    const { body: all } = await this.get<UserAttributes[]>(
       `/users/${username}/followers`
     );
 
@@ -43,7 +58,7 @@ export class Client {
   }
 
   async following(username: string): Promise<User[]> {
-    const all = await this.get<UserAttributes[]>(
+    const { body: all } = await this.get<UserAttributes[]>(
       `/users/${username}/following`
     );
 
@@ -51,19 +66,28 @@ export class Client {
   }
 
   async messageCount(username: string): Promise<number> {
-    const result = await this.get<MessageCount>(
+    const { body } = await this.get<MessageCount>(
       `/users/${username}/messages/count`
     );
 
-    return result.count;
+    return body.count;
   }
 
-  private async get<T>(path: string): Promise<T> {
+  private async get<T>(path: string): Promise<Response<T>> {
+    // Configure 404 responses to not throw an error
+    const validateStatus = (code: number): boolean => {
+      return (code >= 200 && code < 300) || code === 404;
+    };
+
     const response = await this.httpAdapter.get<T>(path, {
       baseURL: this.baseUrl,
+      validateStatus,
     });
 
-    return response.data;
+    return {
+      body: response.data,
+      status: response.status,
+    };
   }
 
   private get httpAdapter(): AxiosInstance {

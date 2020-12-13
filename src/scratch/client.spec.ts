@@ -37,7 +37,15 @@ describe(`${Client.name}`, () => {
       const user = await client.user(username);
 
       expect(user).toBeInstanceOf(User);
-      expect(user.id).toEqual(id);
+      expect(user!.id).toEqual(id);
+    });
+
+    it('returns `undefined` when the user does not exist', async () => {
+      httpMock.onGet(`${baseUri}/users/${username}`).reply(404);
+
+      const user = await client.user(username);
+
+      expect(user).toBeUndefined();
     });
 
     it('throws an error when the service returns a non-successful HTTP response', async () => {
