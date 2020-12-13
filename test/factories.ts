@@ -1,7 +1,5 @@
-import AxiosMockAdapter from 'axios-mock-adapter';
-import Axios from 'axios';
-
 import faker from 'faker';
+
 import { ClientFake } from './helpers';
 
 import { ProjectAttributes, UserAttributes } from '../src/scratch/types';
