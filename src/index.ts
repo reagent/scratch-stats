@@ -2,8 +2,8 @@ import { Client } from './scratch/client';
 import { Project } from './scratch/project';
 import { User } from './scratch/user';
 
-export class Scratch {
-  static user(username: string): Promise<User> {
+class Scratch {
+  static user(username: string): Promise<User | undefined> {
     return new Client().user(username);
   }
 
@@ -11,3 +11,5 @@ export class Scratch {
     return new Client().project(id);
   }
 }
+
+export { User, Project, Scratch };
