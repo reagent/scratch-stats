@@ -32,8 +32,8 @@ type OrderOptions = DateOrderOptions | CountOrderOptions;
 type ProjectSortFunction = (a: Project, b: Project) => number;
 
 const sortOn = (order: OrderOptions): ProjectSortFunction => {
-  const key = Object.keys(order)[0] as OrderAttribute;
-  const direction = Object.values(order)[0] as OrderDirection;
+  const [key] = Object.keys(order) as OrderAttribute[];
+  const [direction] = Object.values(order) as OrderDirection[];
 
   return (a: Project, b: Project): number => {
     const modifier = direction === 'ASC' ? 1 : -1;
