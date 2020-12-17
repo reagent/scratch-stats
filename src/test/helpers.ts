@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import AxiosMockAdapter from 'axios-mock-adapter';
 
-import { Client } from '../src/scratch/client';
+import { Client } from '../scratch/client';
 
 export class ClientFake extends Client {
   constructor() {

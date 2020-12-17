@@ -2,7 +2,7 @@ import faker from 'faker';
 import Axios from 'axios';
 import AxiosMockAdapter from 'axios-mock-adapter';
 
-import * as factory from '../../test/factories';
+import * as factory from '../test/factories';
 
 import { Client } from './client';
 import { User } from './user';

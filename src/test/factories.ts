@@ -2,9 +2,9 @@ import faker from 'faker';
 
 import { ClientFake } from './helpers';
 
-import { ProjectAttributes, UserAttributes } from '../src/scratch/types';
-import { User } from '../src/scratch/user';
-import { Project } from '../src/scratch/project';
+import { ProjectAttributes, UserAttributes } from '../scratch/types';
+import { User } from '../scratch/user';
+import { Project } from '../scratch/project';
 
 export const userAttributes = (
   overrides: Partial<UserAttributes> = {}

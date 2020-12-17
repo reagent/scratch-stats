@@ -1,7 +1,7 @@
 import faker from 'faker';
 
-import * as factory from '../../test/factories';
-import { ClientFake } from '../../test/helpers';
+import * as factory from '../test/factories';
+import { ClientFake } from '../test/helpers';
 
 import { Project } from './project';
 import { ProjectAttributes } from './types';
